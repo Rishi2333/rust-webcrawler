@@ -34,6 +34,8 @@ src/
 ├── storage.rs      # Tracks visited URLs and stores page data
 ```
 
+![image](https://github.com/user-attachments/assets/2e0cb6a4-30da-492e-9010-72020d28137d)
+
 ## Code Workflow
 
 1. **Input**: CLI arguments set start URL, depth, and concurrency.
