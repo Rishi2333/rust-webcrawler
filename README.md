@@ -47,7 +47,7 @@ src/
 ## Features
 
 - ✅ Asynchronous Architecture using `tokio`
-- ✅ Concurrency Task Management using `Semaphoretokio::task::JoinSet`
+- ✅ Concurrency Task Management using `tokio::task::JoinSet`
 - ✅ Rate Limiting to avoid flooding target servers using `Semaphore`
 - ✅ Skips duplicate links with `DashSet`
 - ✅ Clean logging with `tracing`
