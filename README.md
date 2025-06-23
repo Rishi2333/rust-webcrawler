@@ -34,10 +34,11 @@ src/
 ├── storage.rs      # Tracks visited URLs and stores page data
 ```
 
-
-## Code Workflow
+## Workflow Diagram
 
 ![image](https://github.com/user-attachments/assets/2e0cb6a4-30da-492e-9010-72020d28137d)
+
+## Code Workflow
 
 1. **Input**: CLI arguments set start URL, depth, and concurrency.
 2. **Initialize**: Build a shared `CrawlerConfig` and necessary components.
