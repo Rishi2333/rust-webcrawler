@@ -59,7 +59,7 @@ src/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/rust-webcrawler.git
+git clone https://github.com/Rishi2333/rust-webcrawler.git
 cd rust-webcrawler
 ```
 
