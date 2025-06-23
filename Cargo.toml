@@ -1,0 +1,16 @@
+[package]
+name = "webcrawler"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.28", features = ["full"] }              # Async runtime
+reqwest = { version = "0.11", features = ["json"] }           # HTTP client
+scraper = "0.16"                                              # HTML parser
+url = "2.3"                                                   # URL handling
+thiserror = "1.0"                                             # Custom error types
+futures = "0.3"                                               # Async utilities
+dashmap = "5.4"                                               # Thread-safe map
+tracing = "0.1"                                               # Logging
+tracing-subscriber = "0.3"                                    # Logging subscriber
+clap = { version = "4.2", features = ["derive"] }             # CLI argument parser
