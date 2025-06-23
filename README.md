@@ -1,72 +1,69 @@
-Coding partner
+# High-Performance Concurrent Web Crawler in Rust
 
-Show thinking
-Excellent. This is a very clean, scannable, and technical style. Here is a README for your project written in this format.
+![Rust](https://img.shields.io/badge/rust-1.78.0-orange.svg)
+![Crates.io](https://img.shields.io/badge/crates-tokio,_reqwest,_clap-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-High-Performance Concurrent Web Crawler in Rust
-This project is a high-performance, asynchronous web crawler implemented in Rust. It is designed to crawl websites starting from a seed URL, extracting links and visiting them recursively within user-defined depth and concurrency limits. It demonstrates safe concurrency, efficient networking, and robust state management in Rust.
+This project is a high-performance, asynchronous web crawler built from scratch in Rust. It was developed as a deep-dive into Rust's core strengths: memory safety, fearless concurrency, and zero-cost abstractions. The application can crawl websites starting from a given URL, respecting specified depth and concurrency limits.
 
-What Is a Web Crawler?
-A web crawler (also known as a spider) is a program that systematically browses the World Wide Web. It starts from one or more initial URLs (seeds), downloads the page content, extracts all valid hyperlinks from the page, and adds unvisited links to a queue for future crawling. This process repeats recursively to traverse a portion of the web.
+## Features
 
-Features
-Asynchronous Execution: Uses the tokio runtime to enable non-blocking I/O operations for high throughput.
-Concurrent Task Management: Executes multiple crawling tasks simultaneously using tokio::task::JoinSet.
-Controlled Parallelism: A Semaphore ensures a safe cap on the number of concurrent HTTP requests.
-Link Extraction: Parses and resolves all valid <a href="..."> links using the scraper crate.
-Thread-Safe State Tracking: Prevents duplicate visits using DashSet and tracks per-domain page counts.
-Custom Error Types: Defines clean error types using thiserror for readable and maintainable error handling.
-Configurable CLI: Users can specify the URL, depth, concurrency, and per-domain page limits via clap.
-Usage
-Clone the repository
-Bash
+* **Asynchronous:** Built on the `tokio` runtime for non-blocking I/O, allowing for thousands of in-flight requests.
+* **Concurrent:** Safely processes multiple URLs simultaneously using lightweight asynchronous tasks.
+* **Controlled Parallelism:** Uses a `Semaphore` to limit the number of concurrent network requests, preventing server overload.
+* **Robust State Management:** Employs `DashSet` for high-throughput, thread-safe tracking of visited URLs to prevent loops.
+* **Type-Safe Error Handling:** Uses a custom error `enum` with `thiserror` for clean and expressive error propagation.
+* **User-Friendly CLI:** A command-line interface built with `clap` for easy configuration of crawl parameters.
 
-git clone https://github.com/rishi2333/rust-webcrawler.git
-cd rust-webcrawler
-Build the project
-Bash
+## How to Run
 
-cargo build --release
-Run the crawler
-Bash
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repo-url>
+    cd webcrawler
+    ```
 
-cargo run --release -- --url https://example.com --depth 2 --concurrency 20
-CLI Options
-Flag	Description	Default
---url <URL>	Starting point of the crawl (required)	—
---depth <NUMBER>	Max recursion depth for following links	2
---max-pages <N>	Max pages to crawl per domain	50
---concurrency <N>	Max number of in-flight requests	10
+2.  **Run the crawler:**
+    The command requires a starting URL and accepts optional arguments for depth and concurrency.
+    ```bash
+    cargo run --release -- --url [https://toscrape.com](https://toscrape.com) --depth 2 --concurrency 50
+    ```
+    * `--release`: Compiles the project with optimizations for maximum performance.
+    * `--url`: The entry point for the crawl.
+    * `--depth`: (Optional, default: 2) How many links deep to follow.
+    * `--concurrency`: (Optional, default: 10) How many requests to run in parallel.
 
-Export to Sheets
-Internal Architecture
-&lt;details>
-&lt;summary>&lt;strong>View Technical Breakdown&lt;/strong>&lt;/summary>
+## Key Learnings
 
-Modules
-main.rs — Handles CLI parsing (clap) and initializes the crawl process.
-crawler.rs — The core orchestrator. Manages the JoinSet, task spawning, depth checks, and worker coordination.
-fetcher.rs — Handles timed and throttled HTTP GET requests using reqwest.
-parser.rs — Extracts and resolves relative and absolute links from HTML content using scraper.
-storage.rs — Tracks visited URLs (DashSet) and stores crawled page data (Arc<Mutex<Vec<Page>>>).
-Workflow
-CLI arguments are parsed into a CrawlConfig struct.
-The seed URL is added as the first task in a JoinSet.
-The main loop waits for tasks to complete.
-Each completed worker task returns a list of new links it found.
-New, unvisited links are spawned as new tasks in the JoinSet, respecting depth and domain limits.
-The main thread waits for the JoinSet to become empty.
-A summary report is printed to the console.
-&lt;/details>
+This project was a practical masterclass in several advanced programming concepts:
+* **Fearless Concurrency:** Gained hands-on experience with `Arc<Mutex<T>>`, `mpsc::channel`, and `Semaphore` to write safe, multi-tasked code where the compiler guarantees against data races.
+* **Asynchronous Rust:** Deep understanding of the `tokio` runtime, `async/await` syntax, and spawning non-blocking tasks.
+* **Robust Error Handling:** Mastered the `Result<T, E>` and `?` operator pattern, a cornerstone of reliable Rust applications.
+* **Leveraging the Ecosystem:** Learned to effectively integrate powerful third-party crates to accelerate development.
+* **Debugging & OS Interaction:** Gained practical experience debugging not just code logic, but also runtime issues like OS-level file locks (`Access is denied`).
 
-Key Concepts Practiced
-Arc for safe, multi-threaded sharing of state (config, clients).
-DashSet and Mutex for concurrent, mutable state management.
-async/.await and the tokio runtime for non-blocking task execution.
-Result<T, E> and the ? operator for clean and robust error propagation.
-Structured logging and diagnostics via the tracing crate.
-Future Enhancements
-Add robots.txt support for crawl politeness rules.
-Store results in a persistent database (e.g., SQLite).
-Export crawled data as JSON or CSV.
-Analyze text content for keyword extraction.
+---
+
+<details>
+<summary><strong>Click to View Technical Deep-Dive & Architecture</strong></summary>
+
+### Technical Deep-Dive: Implementing a Concurrent Web Crawler in Rust
+
+#### **Abstract**
+
+This document outlines the design and implementation of a high-performance, asynchronous web crawler in Rust...
+
+***(Copy and paste the entire technical article I wrote for you in the previous response here)***
+
+...The project successfully implements a robust, concurrent web crawler and demonstrates several of Rust's powerful features.
+
+</details>
+
+---
+
+## Future Work
+
+The project is ripe for improvements, including:
+* **Respecting `robots.txt`:** Adding a module to parse and follow the rules set by website owners.
+* **Persistent Storage:** Saving the crawled data to a database like SQLite or PostgreSQL.
+* **Content Analysis:** Going beyond just fetching links to actually analyzing the text content of the pages.
