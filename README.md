@@ -20,6 +20,7 @@ This is a fast and concurrent web crawler written in Rust. It starts from a user
 - **Type Safety and Error Handling (`Result`, `thiserror`)**: Ensures reliable, predictable behavior even when requests fail.
 - **Ownership and Borrowing**: Prevents memory bugs and ensures thread safety at compile time.
 - **Modules and Crates**: Project is modular, with responsibilities divided into separate files.
+- **Concurrent Task Lifecycle with `JoinSet`** — A robust architecture for managing the lifecycle of spawned crawl tasks (improved from a channel-based model for better task tracking and safety).
 
 ## Folder Structure
 
