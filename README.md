@@ -46,13 +46,13 @@ src/
 
 ## Features
 
-*-✅ **Asynchronous Architecture** — Non-blocking I/O with `tokio`.
-*-✅ **Concurrent Task Management** — Executes multiple crawling tasks simultaneously using `tokio::task::JoinSet`.
-*-✅ **Rate Limiting** — Uses a `Semaphore` to avoid flooding target servers.
-*-✅ **Domain-Aware Limits** — Restricts crawl count per domain.
-*-✅ **Duplicate Prevention** — Tracks visited URLs with a fast `DashSet`.
-*-✅ **Descriptive Error Reporting** — Powered by `thiserror`.
-*-✅ **Configurable CLI Interface** — Built using `clap` with customizable flags.
+- ✅ Asynchronous Architecture using `tokio`
+- ✅ Concurrency Task Management using `Semaphoretokio::task::JoinSet`
+- ✅ Rate Limiting to avoid flooding target servers using `Semaphore`
+- ✅ Skips duplicate links with `DashSet`
+- ✅ Clean logging with `tracing`
+- ✅ CLI interface using `clap`
+- ✅ Modular code structure
 
 ## How to Use
 
