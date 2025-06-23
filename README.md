@@ -35,24 +35,24 @@ src/
 
 ## Code Workflow
 
-1. **Startup**: Program receives CLI arguments like `--url`, `--depth`, `--concurrency`.
-2. **Initialization**: Configuration is set using these arguments.
-3. **Crawl Start**: The crawler begins at the given URL and spawns async tasks for each page.
-4. **Fetch HTML**: Each task uses `reqwest` to fetch page content.
-5. **Parse Links**: Extracts all valid `http/https` links using the `scraper` crate.
-6. **Store & Track**: Stores the page and records the URL to avoid duplicate visits.
-7. **Repeat**: New links are scheduled as tasks if within depth and domain limits.
-8. **Completion**: Outputs a summary of all visited pages.
+1. **Input**: CLI arguments set start URL, depth, and concurrency.
+2. **Initialize**: Build a shared `CrawlerConfig` and necessary components.
+3. **JoinSet Spawning**: Start crawl tasks using `tokio::task::JoinSet`.
+4. **Fetch**: Request HTML using `reqwest`.
+5. **Parse**: Use `scraper` to extract valid hyperlinks.
+6. **Track & Store**: Save page content and mark URLs as visited.
+7. **Queue New Tasks**: If within depth limit, spawn new crawl tasks for discovered links.
+8. **Complete**: Print a structured summary once the crawl finishes.
 
 ## Features
 
-- ✅ Asynchronous and non-blocking using `tokio`
-- ✅ Concurrency control using `Semaphore`
-- ✅ Per-domain page limit to avoid over-crawling
-- ✅ Skips duplicate links with `DashSet`
-- ✅ Clean logging with `tracing`
-- ✅ CLI interface using `clap`
-- ✅ Modular code structure
+* **Asynchronous Architecture** — Non-blocking I/O with `tokio`.
+* **Concurrent Task Management** — Executes multiple crawling tasks simultaneously using `tokio::task::JoinSet`.
+* **Rate Limiting** — Uses a `Semaphore` to avoid flooding target servers.
+* **Domain-Aware Limits** — Restricts crawl count per domain.
+* **Duplicate Prevention** — Tracks visited URLs with a fast `DashSet`.
+* **Descriptive Error Reporting** — Powered by `thiserror`.
+* **Configurable CLI Interface** — Built using `clap` with customizable flags.
 
 ## How to Use
 
