@@ -59,6 +59,11 @@ src/
 - ✅ CLI interface using `clap`
 - ✅ Modular code structure
 
+## Output
+
+![image](https://github.com/user-attachments/assets/809018c6-04c3-4edc-ac84-56ec74e14c90)
+
+
 ## How to Use
 
 ### 1. Clone the Repository
